@@ -75,15 +75,26 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     <span>Peta Kerawanan</span>
                 </button>
+                <button onclick="navigateTo('lapkin')" id="btn-sidebar-lapkin" class="w-full flex items-center space-x-3 px-3 py-3 rounded-xl text-xs font-semibold transition text-slate-400 hover:bg-slate-800/50 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m0 4V5a2 2 0 00-2 2H6a2 2 0 00-2-2V5a2 2 0 002 2h10a2 2 0 002-2v-2a2 2 0 00-2-2h-3m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    <span>Layanan Lapkin</span>
+                </button>
                 <button onclick="navigateTo('profil')" id="btn-sidebar-profil" class="w-full flex items-center space-x-3 px-3 py-3 rounded-xl text-xs font-semibold transition text-slate-400 hover:bg-slate-800/50 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     <span>Profil & Kontak UPT</span>
                 </button>
             </div>
 
-            <div class="p-6 border-t border-slate-800 text-center text-[10px] text-slate-500 space-y-1">
-                <p class="font-bold text-slate-400">© 2026 Dinas PU SDA Jatim</p>
-                <p>Aplikasi Pelayanan Terpadu</p>
+            <!-- TOMBOL ADMIN (DESKTOP) -->
+            <div class="p-4 border-t border-slate-800 space-y-3">
+                <a href="admin.html" class="flex items-center space-x-3 text-slate-400 hover:text-slate-200 hover:bg-slate-800 p-3 rounded-xl transition group">
+                    <svg class="w-5 h-5 text-slate-500 group-hover:text-amber-500 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16V7a4 4 0 00-8 0m9 0h.01M12 9h.01M20 12V4a2 2 0 00-2-2h-1.5a2.5 2.5 0 00-2.37 1.68L13.29 4.8a2.5 2.5 0 00-3.29 1.68L7.5 12a2 2 0 01-2 2h-1a2 2 0 01-2-2z"></path></svg>
+                    <span class="text-xs font-bold">Login Petugas (Admin)</span>
+                </a>
+                <div class="text-center text-[10px] text-slate-600 space-y-1 border-t border-slate-800 pt-3">
+                    <p class="font-bold text-slate-400">© 2026 Dinas PU SDA Jatim</p>
+                    <p>Aplikasi Pelayanan Terpadu</p>
+                </div>
             </div>
         </aside>
 
@@ -106,6 +117,10 @@
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
+                        <!-- TOMBOL ADMIN (MOBILE) -->
+                        <a href="admin.html" class="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition" title="Login Petugas">
+                            <svg class="w-5 h-5 text-slate-200 hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16V7a4 4 0 00-8 0m9 0h.01M12 9h.01M20 12V4a2 2 0 00-2-2h-1.5a2.5 2.5 0 00-2.37 1.68L13.29 4.8a2.5 2.5 0 00-3.29 1.68L7.5 12a2 2 0 01-2 2h-1a2 2 0 01-2-2z"></path></svg>
+                        </a>
                         <button onclick="refreshAllClientData()" class="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition relative">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18"></path></svg>
                         </button>
@@ -209,10 +224,10 @@
                                 </div>
                             </div>
 
-                            <!-- 8 Shortcut Menu Utama -->
+                            <!-- Shortcut Menu Utama (TERMASUK LAPKIN) -->
                             <div>
                                 <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 pl-1">Layanan Informasi & Aduan</h2>
-                                <div class="grid grid-cols-4 gap-4 text-center bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+                                <div class="grid grid-cols-3 md:grid-cols-5 gap-4 text-center bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
                                     <button onclick="navigateTo('tma')" class="group focus:outline-none p-2 rounded-2xl hover:bg-slate-50 transition">
                                         <div class="w-12 h-12 mx-auto bg-blue-100 group-hover:bg-blue-200 text-blue-700 rounded-2xl flex items-center justify-center shadow-sm transition mb-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg></div>
                                         <span class="text-[10px] md:text-xs font-bold text-slate-700 block leading-tight">Monitor TMA</span>
@@ -228,6 +243,13 @@
                                     <button onclick="navigateTo('peta')" class="group focus:outline-none p-2 rounded-2xl hover:bg-slate-50 transition">
                                         <div class="w-12 h-12 mx-auto bg-purple-100 group-hover:bg-purple-200 text-purple-700 rounded-2xl flex items-center justify-center shadow-sm transition mb-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg></div>
                                         <span class="text-[10px] md:text-xs font-bold text-slate-700 block leading-tight">Peta Rawan</span>
+                                    </button>
+                                    <!-- TOMBOL LAPKIN -->
+                                    <button onclick="navigateTo('lapkin')" class="group focus:outline-none p-2 rounded-2xl hover:bg-slate-50 transition">
+                                        <div class="w-12 h-12 mx-auto bg-red-100 group-hover:bg-red-200 text-red-700 rounded-2xl flex items-center justify-center shadow-sm transition mb-2">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 012-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                                        </div>
+                                        <span class="text-[10px] md:text-xs font-bold text-slate-700 block leading-tight">Lapkin</span>
                                     </button>
                                 </div>
                             </div>
@@ -431,7 +453,34 @@
                 </section>
 
                 <!-- ============================================ -->
-                <!-- SECTION 6: PROFIL DINAS & KONTAK UPT (REDESIGNED) -->
+                <!-- SECTION 6: HALAMAN LAYANAN LAPKIN (#page-lapkin) -->
+                <!-- ============================================ -->
+                <section id="page-lapkin" class="hidden space-y-6 animate-fade-in">
+                    <div class="flex items-center space-x-3 mb-2 lg:hidden">
+                        <button onclick="navigateTo('home')" class="p-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg></button>
+                        <div>
+                            <h2 class="font-outfit font-bold text-base text-slate-800 leading-tight">Laporan Kinerja (Lapkin)</h2>
+                            <p class="text-[10px] text-slate-500">Akses formulir dan rekapitulasi eksternal</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                        <h3 class="font-outfit font-bold text-lg text-slate-800 mb-2">Pusat Layanan Informasi Eksternal</h3>
+                        <p class="text-xs text-slate-500 mb-6">Silakan pilih layanan di bawah ini untuk diarahkan ke sistem Google Forms atau Sheets.</p>
+                        
+                        <!-- Container Grid Dinamis Lapkin -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="lapkin-list-container">
+                            <!-- Loading State -->
+                            <div class="col-span-full flex flex-col items-center justify-center py-12 bg-slate-50 rounded-2xl text-slate-400">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-3"></div>
+                                <p class="text-xs">Memuat daftar layanan...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================ -->
+                <!-- SECTION 7: PROFIL DINAS & KONTAK UPT (#page-profil) -->
                 <!-- ============================================ -->
                 <section id="page-profil" class="hidden space-y-6 animate-fade-in">
                     <div class="flex items-center space-x-3 mb-2 lg:hidden">
@@ -550,6 +599,14 @@
             "Dam Sampean Baru": {x: 85, y: 55}
         };
 
+        // Pemetaan Icon untuk Lapkin
+        const iconMap = {
+            'form': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>`,
+            'users': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`,
+            'clipboard-check': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002 2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>`,
+            'table': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`
+        };
+
         let globalTmaData = [];
 
         window.onload = function() {
@@ -565,7 +622,8 @@
         function refreshAllClientData() {
             fetchBroadcast();
             fetchTMAData();
-            fetchUPTData(); // Tambahkan fetch data UPT
+            fetchUPTData();
+            fetchLayananData(); // Tambahkan fetch data Lapkin
         }
 
         // ============================================
@@ -706,7 +764,64 @@
         }
 
         // ============================================
-        // 3. FETCH & RENDER UPT (FITUR BARU)
+        // 3. FETCH & RENDER LAPKIN (FITUR BARU)
+        // ============================================
+        function fetchLayananData() {
+            if (!GAS_WEB_APP_URL) return;
+            fetch(`${GAS_WEB_APP_URL}?action=getLayanan`)
+                .then(res => res.json())
+                .then(result => {
+                    if (result.status === "success") {
+                        renderLapkinList(result.data);
+                    }
+                }).catch(e => {
+                    console.log("Gagal load Lapkin", e);
+                });
+        }
+
+        function renderLapkinList(data) {
+            const container = document.getElementById('lapkin-list-container');
+            container.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                container.innerHTML = `<p class="col-span-full text-center text-xs text-slate-400 py-10">Belum ada layanan tersedia.</p>`;
+                return;
+            }
+
+            data.forEach(item => {
+                // Ambil icon dari peta, jika tidak ada pakai default form
+                const iconSvg = iconMap[item.Kode_Icon] || iconMap['form'];
+                // Warna badge
+                const badgeClass = item.Warna_Badge ? item.Warna_Badge : "bg-slate-100 text-slate-700";
+                // Target buka (_blank atau _self)
+                const target = item.Target_Buka || "_blank";
+
+                container.innerHTML += `
+                    <a href="${item.Link_Url}" target="${target}" class="group block bg-white border border-slate-200 rounded-2xl p-6 hover:shadow-lg hover:border-blue-300 transition-all duration-300 relative overflow-hidden">
+                        <div class="flex items-start space-x-4">
+                            <div class="p-3 rounded-xl bg-slate-50 text-slate-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                ${iconSvg}
+                            </div>
+                            <div class="flex-1">
+                                <span class="inline-block px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider mb-1 ${badgeClass}">
+                                    Layanan Eksternal
+                                </span>
+                                <h4 class="font-outfit font-bold text-sm text-slate-800 leading-tight mb-2 group-hover:text-blue-600 transition-colors">
+                                    ${item.Nama_Layanan}
+                                </h4>
+                                <div class="flex items-center text-xs text-blue-600 font-medium">
+                                    <span>Klik untuk mengakses</span>
+                                    <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            });
+        }
+
+        // ============================================
+        // 4. FETCH & RENDER UPT (FITUR)
         // ============================================
         function fetchUPTData() {
             if (!GAS_WEB_APP_URL) return;
@@ -735,7 +850,7 @@
                 const cleanPhone = item.Telepon ? item.Telepon.replace(/'/g, "") : "";
                 
                 container.innerHTML += `
-                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between h-full hover:shadow-md transition-shadow duration-300">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex flex-col justify-between h-full hover:shadow-md transition-shadow duration-300">
                         <div>
                             <div class="flex items-start justify-between mb-3">
                                 <div class="pr-2">
@@ -772,7 +887,7 @@
         }
 
         // ============================================
-        // 4. FITUR GEOLOKASI (GPS)
+        // 5. FITUR GEOLOKASI (GPS)
         // ============================================
         function getGPSLocation() {
             if (navigator.geolocation) {
@@ -795,7 +910,7 @@
         }
 
         // ============================================
-        // 5. SUBMIT ADUAN WARGA
+        // 6. SUBMIT ADUAN WARGA
         // ============================================
         function submitLaporan(event) {
             event.preventDefault();
@@ -863,10 +978,12 @@
         // NAVIGATION & UI SYSTEM
         // ============================================
         function navigateTo(pageId) {
-            ['home', 'tma', 'lapor', 'izin', 'peta', 'profil'].forEach(p => {
+            // Daftar halaman
+            ['home', 'tma', 'lapor', 'izin', 'peta', 'lapkin', 'profil'].forEach(p => {
                 document.getElementById(`page-${p}`).classList.toggle('hidden', p !== pageId);
             });
 
+            // Update Tombol Nav Mobile
             ['home', 'tma', 'peta', 'profil'].forEach(btn => {
                 const el = document.getElementById(`btn-nav-${btn}`);
                 if (el) {
@@ -874,6 +991,10 @@
                     el.classList.toggle('font-bold', btn === pageId);
                     el.classList.toggle('text-slate-400', btn !== pageId);
                 }
+            });
+
+            // Update Tombol Sidebar (Desktop)
+            ['home', 'tma', 'lapor', 'izin', 'peta', 'lapkin', 'profil'].forEach(btn => {
                 const sideEl = document.getElementById(`btn-sidebar-${btn}`);
                 if (sideEl) {
                     sideEl.className = btn === pageId 
@@ -889,6 +1010,7 @@
                 'lapor': 'Formulir Lapor Kerusakan',
                 'izin': 'Pelacakan Rekomendasi Teknis',
                 'peta': 'Peta Kerawanan Bencana',
+                'lapkin': 'Laporan Kinerja Eksternal',
                 'profil': 'Profil Dinas & Kontak UPT'
             };
             const subtitles = {
@@ -897,6 +1019,7 @@
                 'lapor': 'Sampaikan laporan infrastruktur yang rusak agar segera ditangani',
                 'izin': 'Lacak status pengajuan rekomendasi teknis Anda',
                 'peta': 'Visualisasi sebaran titik rawan berdasarkan status siaga',
+                'lapkin': 'Menu akses cepat ke formulir Lapkin dan rekapitulasi data',
                 'profil': 'Informasi struktur organisasi dan kontak kantor UPT wilayah'
             };
             
