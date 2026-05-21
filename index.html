@@ -428,13 +428,53 @@
                 </section>
 
                 <!-- ============================================ -->
-                <!-- SECTION 6: PROFIL DINAS (#page-profil) -->
+                <!-- SECTION 6: PROFIL DINAS & KONTAK UPT (REDESIGNED) -->
                 <!-- ============================================ -->
-                <section id="page-profil" class="hidden space-y-4 animate-fade-in">
-                    <!-- Static info -->
-                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 text-xs md:text-sm text-slate-600">
-                        <h3 class="font-outfit font-bold text-sm text-slate-800 mb-2">Dinas PU SDA Jatim</h3>
-                        <p>Aplikasi monitoring dan pelayanan terpadu irigasi, bendungan, serta sumber daya air wilayah provinsi Jawa Timur.</p>
+                <section id="page-profil" class="hidden space-y-6 animate-fade-in">
+                    <div class="flex items-center space-x-3 mb-2 lg:hidden">
+                        <button onclick="navigateTo('home')" class="p-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg></button>
+                        <div>
+                            <h2 class="font-outfit font-bold text-base text-slate-800 leading-tight">Profil & Kontak UPT</h2>
+                        </div>
+                    </div>
+
+                    <!-- Header Profil Dinas -->
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-6 text-white shadow-lg border border-slate-700">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/10 shrink-0">
+                                <svg class="w-8 h-8 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6.5 13h-13L12 6z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-bold text-lg md:text-xl leading-tight">Dinas Pekerjaan Umum Sumber Daya Air</h3>
+                                <p class="text-xs md:text-sm text-slate-300 font-medium">Provinsi Jawa Timur</p>
+                            </div>
+                        </div>
+                        <div class="h-px bg-white/20 w-full mb-5"></div>
+                        <div class="space-y-2">
+                            <p class="text-sm md:text-base font-semibold text-white">Tentang Kami</p>
+                            <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-light italic">
+                                "Mengelola Air dengan Bijak untuk Kesejahteraan Rakyat Jawa Timur"
+                            </p>
+                            <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                                Berkomitmen memberikan pelayanan prima dalam pengelolaan sumber daya air, irigasi, dan pengendalian daya rusak air secara berkelanjutan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Daftar UPT -->
+                    <div>
+                        <h3 class="font-outfit font-bold text-sm md:text-base text-slate-800 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            Kantor UPT PSDA Wilayah
+                        </h3>
+                        <!-- Container Grid Dinamis UPT -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="upt-list-container">
+                            <!-- Loading State -->
+                            <div class="col-span-full flex flex-col items-center justify-center py-12 bg-white rounded-3xl border border-slate-100 text-slate-400">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-3"></div>
+                                <p class="text-xs">Memuat data kantor UPT...</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -486,6 +526,9 @@
 
     <!-- SCRIPT JAVASCRIPT UTAMA -->
     <script>
+        // ============================================
+        // KONFIGURASI URL DEPLOYMENT TERBARU
+        // ============================================
         const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwfE1BwNinr86bGcPcXb5SLK_HeyN8-WiXGFcPfvB4ird2BA5oWE78s2et-GqfPD0vL/exec"; 
 
         const localTMAFallback = [
@@ -518,6 +561,7 @@
         function refreshAllClientData() {
             fetchBroadcast();
             fetchTMAData();
+            fetchUPTData(); // Tambahkan fetch data UPT
         }
 
         // ============================================
@@ -658,7 +702,73 @@
         }
 
         // ============================================
-        // 3. FITUR GEOLOKASI (GPS)
+        // 3. FETCH & RENDER UPT (FITUR BARU)
+        // ============================================
+        function fetchUPTData() {
+            if (!GAS_WEB_APP_URL) return;
+            fetch(`${GAS_WEB_APP_URL}?action=getUPT`)
+                .then(res => res.json())
+                .then(result => {
+                    if (result.status === "success") {
+                        renderUPTList(result.data);
+                    }
+                }).catch(e => {
+                    console.log("Gagal load UPT", e);
+                });
+        }
+
+        function renderUPTList(data) {
+            const container = document.getElementById('upt-list-container');
+            container.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                container.innerHTML = `<p class="col-span-full text-center text-xs text-slate-400 py-10">Data UPT belum tersedia.</p>`;
+                return;
+            }
+
+            data.forEach(item => {
+                // Membersihkan nomor telepon jika ada tanda kutip asal dari excel
+                const cleanPhone = item.Telepon ? item.Telepon.replace(/'/g, "") : "";
+                
+                container.innerHTML += `
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between h-full hover:shadow-md transition-shadow duration-300">
+                        <div>
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="pr-2">
+                                    <h4 class="font-outfit font-bold text-sm text-slate-800 leading-tight">${item.Nama_Kantor}</h4>
+                                    <p class="text-[10px] font-bold text-amber-600 uppercase tracking-wider mt-1.5">${item.Wilayah_Kerja}</p>
+                                </div>
+                                <div class="bg-blue-50 p-2 rounded-lg text-blue-600 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                </div>
+                            </div>
+                            <div class="mt-3 space-y-2">
+                                <div class="flex items-start text-xs text-slate-600">
+                                    <svg class="w-3.5 h-3.5 mr-2 mt-0.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <span class="leading-snug">${item.Lokasi}</span>
+                                </div>
+                                <p class="text-[10px] text-slate-500 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                    ${item.Alamat}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4 grid grid-cols-2 gap-3">
+                            <a href="tel:${cleanPhone}" class="flex items-center justify-center space-x-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-[10px] font-bold px-3 py-2.5 rounded-xl transition group">
+                                <svg class="w-3.5 h-3.5 group-hover:scale-110 transition" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                <span>Telepon</span>
+                            </a>
+                            <a href="${item.Link_Maps}" target="_blank" class="flex items-center justify-center space-x-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] font-bold px-3 py-2.5 rounded-xl transition group">
+                                <svg class="w-3.5 h-3.5 group-hover:scale-110 transition" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                                <span>Rute</span>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // ============================================
+        // 4. FITUR GEOLOKASI (GPS)
         // ============================================
         function getGPSLocation() {
             if (navigator.geolocation) {
@@ -681,7 +791,7 @@
         }
 
         // ============================================
-        // 4. SUBMIT ADUAN WARGA
+        // 5. SUBMIT ADUAN WARGA
         // ============================================
         function submitLaporan(event) {
             event.preventDefault();
@@ -768,6 +878,29 @@
                 }
             });
 
+            // Update Desktop Header Title
+            const titles = {
+                'home': 'Beranda Dashboard',
+                'tma': 'Monitor Tinggi Air',
+                'lapor': 'Formulir Lapor Kerusakan',
+                'izin': 'Pelacakan Rekomendasi Teknis',
+                'peta': 'Peta Kerawanan Bencana',
+                'profil': 'Profil Dinas & Kontak UPT'
+            };
+            const subtitles = {
+                'home': 'Selamat datang di sistem monitoring terpadu Dinas PU SDA Jawa Timur',
+                'tma': 'Pemantauan ketinggian muka air real-time seluruh wilayah sungai',
+                'lapor': 'Sampaikan laporan infrastruktur yang rusak agar segera ditangani',
+                'izin': 'Lacak status pengajuan rekomendasi teknis Anda',
+                'peta': 'Visualisasi sebaran titik rawan berdasarkan status siaga',
+                'profil': 'Informasi struktur organisasi dan kontak kantor UPT wilayah'
+            };
+            
+            if(titles[pageId]) {
+                document.getElementById('desktop-page-title').innerText = titles[pageId];
+                document.getElementById('desktop-page-subtitle').innerText = subtitles[pageId];
+            }
+
             document.querySelector('main').scrollTop = 0;
         }
 
@@ -785,6 +918,12 @@
         
         function showMarkerInfo(nama, status) {
             showNotification(`Lokasi: ${nama}`, status);
+        }
+
+        function handleSearchKeyPress(e, val) {
+            if (e.key === 'Enter') {
+                showNotification("Pencarian", `Fitur pencarian lokasi "${val}" sedang dalam pengembangan.`);
+            }
         }
     </script>
 </body>
