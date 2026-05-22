@@ -6,6 +6,8 @@
     <title>SDA Jatim Mobile - PU SDA Provinsi Jawa Timur</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS (Untuk Peta masa depan/opsional) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Google Fonts: Inter & Outfit -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -30,6 +32,13 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Custom Style for Map Container */
+        #map-container {
+            height: 400px;
+            width: 100%;
+            border-radius: 1rem;
+            z-index: 1;
+        }
     </style>
 </head>
 <body class="bg-slate-900 min-h-screen flex justify-center items-stretch p-0 overflow-hidden">
@@ -43,7 +52,8 @@
             <div class="p-6 border-b border-slate-800 flex items-center space-x-3">
                 <!-- LOGO DESKTOP -->
                 <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-md border border-slate-200 shrink-0 overflow-hidden p-1.5">
-                    <img src="assets/images/logo.png" alt="Logo PUSDA Jatim" class="w-full h-full object-contain">
+                    <!-- Placeholder Logo Image -->
+                    <img src="https://via.placeholder.com/150/0000FF/FFFFFF?text=SDA" alt="Logo PUSDA Jatim" class="w-full h-full object-contain">
                 </div>
                 
                 <div>
@@ -76,7 +86,7 @@
                     <span>Peta Kerawanan</span>
                 </button>
                 <button onclick="navigateTo('lapkin')" id="btn-sidebar-lapkin" class="w-full flex items-center space-x-3 px-3 py-3 rounded-xl text-xs font-semibold transition text-slate-400 hover:bg-slate-800/50 hover:text-white">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m0 4V5a2 2 0 00-2 2H6a2 2 0 00-2-2V5a2 2 0 002 2h10a2 2 0 002-2v-2a2 2 0 00-2-2h-3m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m0 4V5a2 2 0 00-2-2H6a2 2 0 00-2-2V5a2 2 0 002 2h10a2 2 0 002-2v-2a2 2 0 00-2-2h-3m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     <span>Layanan Lapkin</span>
                 </button>
                 <button onclick="navigateTo('profil')" id="btn-sidebar-profil" class="w-full flex items-center space-x-3 px-3 py-3 rounded-xl text-xs font-semibold transition text-slate-400 hover:bg-slate-800/50 hover:text-white">
@@ -109,7 +119,7 @@
                     <div class="flex items-center space-x-3">
                         <!-- LOGO MOBILE -->
                         <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md border border-slate-200 shrink-0 overflow-hidden p-1">
-                            <img src="assets/images/logo.png" alt="Logo PUSDA Jatim" class="w-full h-full object-contain">
+                            <img src="https://via.placeholder.com/150/0000FF/FFFFFF?text=SDA" alt="Logo PUSDA Jatim" class="w-full h-full object-contain">
                         </div>
                         <div>
                             <h1 class="text-xs font-bold uppercase tracking-wider text-amber-400 font-outfit">PU SDA JATIM</h1>
@@ -362,7 +372,10 @@
 
                         <div class="mb-6">
                             <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Unggah Foto Bukti Kejadian</label>
-                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-2xl bg-slate-50">
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-2xl bg-slate-50 relative">
+                                <!-- Preview Image -->
+                                <img id="image-preview" class="hidden max-h-48 w-auto rounded-lg mb-3 border border-slate-200 shadow-sm">
+                                
                                 <div class="space-y-1 text-center">
                                     <div class="flex text-xs text-slate-600 justify-center">
                                         <label class="relative cursor-pointer bg-blue-100 px-4 py-2 rounded-lg font-semibold text-blue-700 hover:text-blue-600 focus-within:outline-none transition">
@@ -417,8 +430,9 @@
                         <!-- Area Peta Dinamis -->
                         <div class="lg:col-span-3 bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
                             <div class="w-full bg-blue-50/50 border border-blue-100 rounded-2xl p-4 relative min-h-64 lg:min-h-[400px] flex items-center justify-center overflow-hidden">
-                                <!-- Base Map Outline -->
+                                <!-- Base Map Outline (SVG Placeholder) -->
                                 <svg class="w-full max-w-2xl h-auto text-sky-200/80 opacity-90 stroke-sky-400 stroke-2 fill-sky-100 relative z-0" viewBox="0 0 100 50">
+                                    <!-- Bentuk kasar peta Jawa Timur -->
                                     <path d="M5 25 Q15 20, 25 24 T45 23 T65 26 T80 23 L85 24 T95 21 L95 25 L80 27 T60 25 T40 28 Z" />
                                     <path d="M55 12 Q70 12, 85 10 T95 14 L95 16 T75 16 Z" />
                                 </svg>
@@ -494,8 +508,7 @@
                     <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-6 text-white shadow-lg border border-slate-700">
                         <div class="flex items-center space-x-4 mb-5">
                             <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/10 shrink-0">
-                                <!-- Menggunakan logo.png lokal juga di sini agar konsisten -->
-                                <img src="assets/images/logo.png" alt="Logo PUSDA Jatim" class="w-full h-full object-contain p-1">
+                                <img src="https://via.placeholder.com/150/0000FF/FFFFFF?text=SDA" alt="Logo PUSDA Jatim" class="w-full h-full object-contain p-1">
                             </div>
                             <div>
                                 <h3 class="font-outfit font-bold text-lg md:text-xl leading-tight">Dinas Pekerjaan Umum Sumber Daya Air</h3>
@@ -581,9 +594,11 @@
     <script>
         // ============================================
         // KONFIGURASI URL DEPLOYMENT TERBARU
+        // GANTI URL INI DENGAN URL DEPLOYMENT WEB APP ANDA
         // ============================================
         const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwfE1BwNinr86bGcPcXb5SLK_HeyN8-WiXGFcPfvB4ird2BA5oWE78s2et-GqfPD0vL/exec"; 
 
+        // Fallback Data jika Server Error (Untuk Demo Awal)
         const localTMAFallback = [
             { Wilayah_Sungai: "Brantas", Lokasi: "Kali Mas (Gubeng)", TMA_Meter: 1.45, Status: "NORMAL", Waktu_Update: "Hari ini" },
             { Wilayah_Sungai: "Solo", Lokasi: "Bengawan Solo (Bojonegoro)", TMA_Meter: 5.60, Status: "SIAGA I", Waktu_Update: "Hari ini" },
@@ -591,19 +606,20 @@
         ];
 
         // Pemetaan Titik SVG Peta (Koordinat X dan Y Relatif 0-100%)
+        // Disesuaikan dengan lokasi di setup.gs
         const svgMapCoordinates = {
-            "Kali Mas (Gubeng)": {x: 65, y: 40},
-            "Kali Jagir": {x: 66, y: 43},
-            "Bengawan Solo (Bojonegoro)": {x: 45, y: 35},
-            "Sungai Bengawan Solo (Babat)": {x: 55, y: 32},
-            "Dam Sampean Baru": {x: 85, y: 55}
+            "Kali Mas (Gubeng)": {x: 68, y: 42}, // Surabaya Timur
+            "Kali Jagir": {x: 69, y: 45},         // Surabaya Selatan
+            "Bengawan Solo (Bojonegoro)": {x: 48, y: 36}, // Jawa Timur Tengah
+            "Sungai Bengawan Solo (Babat)": {x: 58, y: 34},   // Lamongan
+            "Dam Sampean Baru": {x: 85, y: 55}   // Bondowoso (Timur)
         };
 
-        // Pemetaan Icon untuk Lapkin
+        // Pemetaan Icon untuk Lapkin (Sesuai Kode_Icon di setup.gs)
         const iconMap = {
             'form': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>`,
             'users': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`,
-            'clipboard-check': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002 2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>`,
+            'clipboard-check': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>`,
             'table': `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`
         };
 
@@ -613,10 +629,25 @@
             refreshAllClientData();
         };
 
-        // Ganti nama label file foto saat di-select
+        // Event Listener untuk Preview Gambar
         document.getElementById('lapor-foto').addEventListener('change', function(e) {
-            const fileName = e.target.files[0] ? e.target.files[0].name : "Belum ada file dipilih";
+            const file = e.target.files[0];
+            const fileName = file ? file.name : "Belum ada file dipilih";
             document.getElementById('nama-file-pilihan').innerText = fileName;
+
+            // Preview Logic
+            const preview = document.getElementById('image-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.classList.add('hidden');
+                preview.src = '';
+            }
         });
 
         function refreshAllClientData() {
@@ -790,6 +821,7 @@
 
             data.forEach(item => {
                 // Ambil icon dari peta, jika tidak ada pakai default form
+                // Pastikan key sesuai dengan data dari Sheet (Kode_Icon)
                 const iconSvg = iconMap[item.Kode_Icon] || iconMap['form'];
                 // Warna badge
                 const badgeClass = item.Warna_Badge ? item.Warna_Badge : "bg-slate-100 text-slate-700";
@@ -942,6 +974,7 @@
                     if (res.status === "success") {
                         showNotification("Aduan Terkirim!", "Laporan Anda telah diteruskan ke petugas PU SDA Jatim.");
                         document.getElementById('form-laporan').reset();
+                        document.getElementById('image-preview').classList.add('hidden');
                         document.getElementById('nama-file-pilihan').innerText = "Belum ada file dipilih";
                         navigateTo('home');
                     } else {
